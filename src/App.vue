@@ -5,13 +5,18 @@
     </header>
 
     <main class="main">
-      <VoiceBot />
+      <!-- Pasar apiKey al componente VoiceBot -->
+      <VoiceBot :api-key="apiKey" />
     </main>
   </div>
 </template>
 
 <script setup>
 import VoiceBot from './components/VoiceBot.vue'
+
+// Obtener la API Key desde .env
+const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
+console.log("API Key en App.vue:", apiKey); // Solo en desarrollo
 </script>
 
 <style>
@@ -44,3 +49,4 @@ import VoiceBot from './components/VoiceBot.vue'
   padding: 2rem;
 }
 </style>
+

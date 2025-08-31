@@ -1,6 +1,6 @@
 <template>
   <div class="p-4 border rounded shadow max-w-md mx-auto">
-    <h2 class="text-xl font-bold mb-2"> 👩🏻‍🔬Dr. Celer </h2>
+    <h2 class="text-xl font-bold mb-2"> 🧑🏻‍🔬Dr. Celer </h2>
 
     <div class="mb-2">
       <button
@@ -29,6 +29,14 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 
+// Recibir la API Key desde App.vue
+const props = defineProps({
+  apiKey: {
+    type: String,
+    required: true
+  }
+})
+
 // Variables reactivas
 const transcript = ref('')
 const respuesta = ref('')
@@ -38,7 +46,6 @@ const error = ref('')
 // Referencia a SpeechRecognition
 let recognition = null
 
-// Inicialización después de montar el componente
 onMounted(() => {
   if (!('webkitSpeechRecognition' in window || 'SpeechRecognition' in window)) {
     error.value = 'Tu navegador no soporta SpeechRecognition'
@@ -53,7 +60,6 @@ onMounted(() => {
   recognition.interimResults = false
   recognition.maxAlternatives = 1
 
-  // Evento cuando hay resultado
   recognition.onresult = async (event) => {
     transcript.value = event.results[0][0].transcript
     try {
@@ -66,12 +72,10 @@ onMounted(() => {
     }
   }
 
-  // Evento cuando termina la escucha
   recognition.onend = () => {
     listening.value = false
   }
 
-  // Evento de error
   recognition.onerror = (e) => {
     listening.value = false
     error.value = `Error de reconocimiento: ${e.error}`
@@ -86,13 +90,13 @@ function startListening() {
   respuesta.value = ''
   error.value = ''
   listening.value = true
-  recognition.start() // ← Comando que inicia la escucha
+  recognition.start()
 }
 
 // Función para detener la escucha
 function stopListening() {
   if (!recognition) return
-  recognition.stop() // ← Comando que detiene la escucha
+  recognition.stop()
   listening.value = false
 }
 
@@ -101,14 +105,17 @@ function speak(text) {
   if (!('speechSynthesis' in window)) return
   const utterance = new SpeechSynthesisUtterance(text)
   utterance.lang = 'es-ES'
-  speechSynthesis.speak(utterance) // ← Comando que reproduce la voz
+  speechSynthesis.speak(utterance)
 }
 
-// Función para llamar al LLM Gemini
+// Función para llamar al LLM Gemini usando la API Key
 async function askGemini(prompt) {
-  const res = await fetch('/api/llm', {
+  const res = await fetch('https://api.gemini.com/llm', { // Cambia a tu endpoint real
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${props.apiKey}`
+    },
     body: JSON.stringify({ prompt })
   })
   const data = await res.json()
@@ -122,3 +129,4 @@ button:disabled {
   cursor: not-allowed;
 }
 </style>
+
