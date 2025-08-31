@@ -1,6 +1,6 @@
 <template>
   <div class="p-4 border rounded shadow max-w-md mx-auto">
-    <h2 class="text-xl font-bold mb-2">🤖 VoiceBot Salud</h2>
+    <h2 class="text-xl font-bold mb-2"> 👩🏻‍🔬Dr. Celer </h2>
 
     <div class="mb-2">
       <button
