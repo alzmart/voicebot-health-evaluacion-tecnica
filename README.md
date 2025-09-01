@@ -63,20 +63,10 @@ Más información: [Vue Docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc
    cd voicebot-health-evaluacion-tecnica
 
 
-### Instalar dependencias / Install dependencies
+### Instalar dependencias / Install dependencies | Ejecutar en modo desarrollo / Run in development | ### Compilar para producción / Build for production | Vista previa del build de producción / Preview production build
 ```sh
 npm install
-
-### Ejecutar en modo desarrollo / Run in development
-```sh
 npm run dev
-Luego abre en tu navegador: http://localhost:5173
-
-### Compilar para producción / Build for production
-```sh
+#Luego abre en tu navegador: http://localhost:5173
 npm run build
-
-
-### Vista previa del build de producción / Preview production build
-```sh
 npm run preview
