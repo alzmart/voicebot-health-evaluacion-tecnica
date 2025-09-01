@@ -19,13 +19,13 @@ Más información: [Vue Docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc
 
 ---
 
-## 🚀 Demo en línea / Live Demo
+##  Demo en línea / Live Demo
 [👉 SaludBot en Vercel](https://voicebot-health-evaluacion-te-git-97469a-luzs-projects-04de6f26.vercel.app/?_vercel_share=nP67fKOkGj3xNZK7z5xIFGA3FziYogiE)  
 ✅ **Acceso inmediato sin necesidad de registrarse / Instant access, no signup required**
 
 ---
 
-## 🔗 Repositorio / Repository
+##  Repositorio / Repository
 [GitHub - SaludBot VoiceBot](https://github.com/alzmart/voicebot-health-evaluacion-tecnica)
 
 ---
