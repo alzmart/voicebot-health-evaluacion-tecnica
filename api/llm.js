@@ -3,7 +3,7 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
-  const { historial } = req.body; // <-- ahora recibimos todo el historial
+  const { historial } = req.body; // recibimos todo el historial
 
   // Log solo en desarrollo
   if (process.env.NODE_ENV !== "production") {
@@ -21,13 +21,15 @@ export default async function handler(req, res) {
             {
               role: "system",
               parts: [
-                { text: "Eres un asistente de salud. Haz preguntas básicas de diagnóstico y recomienda centros si es necesario." }
+                {
+                  text: "Eres un asistente de salud. Haz preguntas básicas de diagnóstico y recomienda centros si es necesario."
+                }
               ]
             },
-            // Mapear todo el historial (user + assistant)
+            // Mapear todo el historial (usuario + asistente)
             ...historial.map(msg => ({
-              role: msg.role,
-              parts: [{ text: msg.content }]
+              role: msg.rol,           // 'usuario' o 'asistente'
+              parts: [{ text: msg.contenido }] // <-- coincide con el nuevo VoiceBot
             }))
           ]
         })
@@ -41,11 +43,13 @@ export default async function handler(req, res) {
       console.log("💬 Respuesta de Gemini:", data);
     }
 
-    const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || "Buen día, ¿cómo puedo ayudarte?";
-    res.status(200).json({ reply });
+    // Extraer la respuesta del primer output de Gemini
+    const reply = data.candidates?.[0]?.content?.map(p => p.text).join('') || "Lo siento, no entendí tu mensaje.";
 
-  } catch (e) {
-    console.error("❌ Error en backend:", e);
-    res.status(500).json({ error: "Error al comunicarse con Gemini" });
+    return res.status(200).json({ reply });
+  } catch (err) {
+    console.error("Error llamando a Gemini:", err);
+    return res.status(500).json({ error: "Error en el servidor" });
   }
 }
+

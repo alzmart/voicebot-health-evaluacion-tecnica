@@ -25,9 +25,15 @@ export default async function handler(req, res) {
     // Generar prompt para Gemini usando historial + listado de hospitales
     const body = {
       contents: [
-        { role: "system", parts: [{ text: "Eres un asistente de salud. Recomienda centros médicos según el historial del usuario usando la lista disponible." }] },
-        ...historial.map(msg => ({ role: msg.role, parts: [{ text: msg.content }] })),
-        { role: "assistant", parts: [{ text: `Lista de hospitales disponibles: ${centros.map(c => c.nombre).join(', ')}` }] }
+        { 
+          role: "system", 
+          parts: [{ text: "Eres un asistente de salud. Recomienda centros médicos según el historial del usuario usando la lista disponible." }] 
+        },
+        ...historial.map(msg => ({ role: msg.rol, parts: [{ text: msg.contenido }] })),
+        { 
+          role: "assistant", 
+          parts: [{ text: `Lista de hospitales disponibles: ${centros.map(c => c.nombre).join(', ')}` }] 
+        }
       ]
     };
 
@@ -37,10 +43,10 @@ export default async function handler(req, res) {
     );
 
     const data = await response.json();
-    const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || "Aquí tienes los centros de salud disponibles.";
+    const reply = data.candidates?.[0]?.content?.map(p => p.text).join('') || "Aquí tienes los centros de salud disponibles.";
 
     // Agregar reply al historial
-    historial.push({ role: "assistant", content: reply });
+    historial.push({ rol: "asistente", contenido: reply });
 
     res.status(200).json({ reply, centros });
 

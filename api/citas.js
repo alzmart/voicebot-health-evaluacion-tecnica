@@ -14,9 +14,15 @@ export default async function handler(req, res) {
     // Generar prompt para Gemini usando historial + listado de citas
     const body = {
       contents: [
-        { role: "system", parts: [{ text: "Eres un asistente de salud. Ayuda a programar citas médicas según el historial del usuario usando la lista de citas disponibles." }] },
-        ...historial.map(msg => ({ role: msg.role, parts: [{ text: msg.content }] })),
-        { role: "assistant", parts: [{ text: `Citas disponibles: ${citas.map(c => `${c.paciente} con ${c.doctor} el ${c.fecha} a las ${c.hora}`).join('; ')}` }] }
+        { 
+          role: "system", 
+          parts: [{ text: "Eres un asistente de salud. Ayuda a programar citas médicas según el historial del usuario usando la lista de citas disponibles." }] 
+        },
+        ...historial.map(msg => ({ role: msg.rol, parts: [{ text: msg.contenido }] })),
+        { 
+          role: "assistant", 
+          parts: [{ text: `Citas disponibles: ${citas.map(c => `${c.paciente} con ${c.doctor} el ${c.fecha} a las ${c.hora}`).join('; ')}` }] 
+        }
       ]
     };
 
@@ -26,10 +32,10 @@ export default async function handler(req, res) {
     );
 
     const data = await response.json();
-    const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || "Puedo ayudarte a agendar una cita.";
+    const reply = data.candidates?.[0]?.content?.map(p => p.text).join('') || "Puedo ayudarte a agendar una cita.";
 
     // Agregar reply al historial
-    historial.push({ role: "assistant", content: reply });
+    historial.push({ rol: "asistente", contenido: reply });
 
     res.status(200).json({ reply, citas });
 
