@@ -1,6 +1,5 @@
 # SaludBot - VoiceBot Web
-
-# ![Vue](https://img.shields.io/badge/Vue-3.5.18-brightgreen) ![Vite](https://img.shields.io/badge/Vite-7.0.6-blue) ![Node](https://img.shields.io/badge/Node-%3E=20-ff69b4) SaludBot - VoiceBot Web
+![Vue](https://img.shields.io/badge/Vue-3.5.18-brightgreen) ![Vite](https://img.shields.io/badge/Vite-7.0.6-blue) ![Node](https://img.shields.io/badge/Node-%3E=20-ff69b4)
 
 **Español:**  
 SaludBot es un chatbot web funcional habilitado para voz, construido con **Vue 3 + Vite**.  
@@ -43,15 +42,6 @@ Más información: [Vue Docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc
 
 ## ⚡ Configuración del proyecto / Project Setup
 
-Instalar dependencias / Install dependencies:
-
----
-## ⚡ Ventajas de esta versión / Advantages of this version
-
-- Badges de Vue, Vite y Node para visualización inmediata
-- Secciones bilingües (Español / Inglés) para repositorios internacionales
-- Estructura clara: requisitos, instalación, desarrollo, compilación, despliegue, estructura de archivos y notas adicionales
-- Compatible con Vite + Vue 3 y listo para Vercel
-
+### Instalar dependencias / Install dependencies
 ```sh
 npm install
