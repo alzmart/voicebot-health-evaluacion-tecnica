@@ -66,3 +66,17 @@ Más información: [Vue Docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc
 ### Instalar dependencias / Install dependencies
 ```sh
 npm install
+
+### Ejecutar en modo desarrollo / Run in development
+```sh
+npm run dev
+Luego abre en tu navegador: http://localhost:5173
+
+### Compilar para producción / Build for production
+```sh
+npm run build
+
+
+### Vista previa del build de producción / Preview production build
+```sh
+npm run preview
