@@ -10,14 +10,14 @@
           :key="index + '-' + msg.contenido"
           :class="msg.rol === 'usuario' ? 'bubble-user' : 'bubble-bot'"
         >
-          <span class="bubble-icon">{{ msg.rol === 'usuario' ? '🧑' : '🤖' }}</span>
+          <span class="bubble-icon">{{ msg.rol === 'usuario' ? '🗣️' : '🧑🏻‍🔬' }}</span>
           <span class="bubble-text">{{ msg.contenido }}</span>
         </div>
       </transition-group>
 
       <!-- Indicador de bot escribiendo con puntitos animados y parpadeo -->
       <div v-if="botGenerating" class="bubble-bot typing active">
-        <span class="bubble-icon">🤖</span>
+        <span class="bubble-icon">🧑🏻‍🔬</span>
         <span class="bubble-text">Escribiendo<span class="dots"></span></span>
       </div>
     </div>
