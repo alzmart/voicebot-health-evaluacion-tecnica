@@ -1,19 +1,21 @@
-import 'dotenv/config'; // ES Modules
-
 export default async function handler(req, res) {
-  const { prompt } = req.body;
+  if (req.method !== "POST") {
+    return res.status(405).json({ error: "Method not allowed" });
+  }
+
+  const { historial } = req.body; // <-- ahora recibimos todo el historial
 
   // Log solo en desarrollo
-  if (process.env.NODE_ENV !== 'production') {
-    console.log("📝 Prompt recibido:", prompt);
+  if (process.env.NODE_ENV !== "production") {
+    console.log("📝 Historial recibido:", historial);
   }
 
   try {
     const response = await fetch(
       `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${process.env.GEMINI_API_KEY}`,
       {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           contents: [
             {
@@ -22,7 +24,11 @@ export default async function handler(req, res) {
                 { text: "Eres un asistente de salud. Haz preguntas básicas de diagnóstico y recomienda centros si es necesario." }
               ]
             },
-            { role: "user", parts: [{ text: prompt }] }
+            // Mapear todo el historial (user + assistant)
+            ...historial.map(msg => ({
+              role: msg.role,
+              parts: [{ text: msg.content }]
+            }))
           ]
         })
       }
@@ -31,7 +37,7 @@ export default async function handler(req, res) {
     const data = await response.json();
 
     // Log solo en desarrollo
-    if (process.env.NODE_ENV !== 'production') {
+    if (process.env.NODE_ENV !== "production") {
       console.log("💬 Respuesta de Gemini:", data);
     }
 
